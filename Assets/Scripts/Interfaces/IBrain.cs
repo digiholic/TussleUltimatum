@@ -14,4 +14,6 @@ public interface IBrain
     /// </summary>
     /// <returns>A set of all thoughts the brain thinks this frame</returns>
     HashSet<Thought> Think();
+
+    void ClearThoughts();
 }

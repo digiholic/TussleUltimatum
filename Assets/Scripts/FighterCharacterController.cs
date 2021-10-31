@@ -2,20 +2,29 @@ using KinematicCharacterController;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 public class FighterCharacterController : MonoBehaviour, ICharacterController
 {
+    public int playerId = 0;
+
     public float gravity;
     public float jump;
     public float speed;
 
-    private KinematicCharacterMotor Motor;
-
+    
     private float hAxis;
     private bool jumpPressed;
-
+    private KinematicCharacterMotor Motor;
     private Vector3 velocity;
+    private IBrain brain;
 
+    private HashSet<Thought> thoughtsThisFrame;
+
+    void Awake()
+    {
+        brain = GetComponent<IBrain>();
+    }
     void Start()
     {
         if (!TryGetComponent(out Motor))
@@ -28,21 +37,17 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
 
     void Update()
     {
-        hAxis = Input.GetAxis("Horizontal");
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            jumpPressed = true;
-        }
-    }
-
-    public void AfterCharacterUpdate(float deltaTime)
-    {
         
     }
 
     public void BeforeCharacterUpdate(float deltaTime)
     {
-        
+        thoughtsThisFrame = brain.Think();
+    }
+
+    public void AfterCharacterUpdate(float deltaTime)
+    {
+        brain.ClearThoughts();
     }
 
     public bool IsColliderValidForCollisions(Collider coll)
