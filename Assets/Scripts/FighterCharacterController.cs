@@ -65,11 +65,6 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
         
     }
 
-    public void PostGroundingUpdate(float deltaTime)
-    {
-        
-    }
-
     public void ProcessHitStabilityReport(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, Vector3 atCharacterPosition, Quaternion atCharacterRotation, ref HitStabilityReport hitStabilityReport)
     {
         
@@ -98,5 +93,28 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
             Motor.ForceUnground();
         }
         currentVelocity = velocity;
+    }
+
+    public void PostGroundingUpdate(float deltaTime)
+    {
+        // Handle landing and leaving ground
+        if (Motor.GroundingStatus.IsStableOnGround && !Motor.LastGroundingStatus.IsStableOnGround)
+        {
+            OnLanded();
+        }
+        else if (!Motor.GroundingStatus.IsStableOnGround && Motor.LastGroundingStatus.IsStableOnGround)
+        {
+            OnLeaveStableGround();
+        }
+    }
+
+    protected void OnLanded()
+    {
+        Debug.Log("Landed");
+    }
+
+    protected void OnLeaveStableGround()
+    {
+        Debug.Log("Left ground");
     }
 }
