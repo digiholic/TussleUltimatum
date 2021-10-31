@@ -9,11 +9,5 @@ using UnityEngine;
 /// </summary>
 public interface IBrain
 {
-    /// <summary>
-    /// The set of all thoughts that have been thought this frame. It is a set, so duplicates are ignored.
-    /// </summary>
-    /// <returns>A set of all thoughts the brain thinks this frame</returns>
-    HashSet<Thought> Think();
-
-    void ClearThoughts();
+    void Think(out InputPackage inputs);
 }

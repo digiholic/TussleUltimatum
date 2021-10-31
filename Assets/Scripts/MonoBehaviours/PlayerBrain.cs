@@ -8,7 +8,7 @@ using Rewired;
 /// </summary>
 public class PlayerBrain : MonoBehaviour, IBrain
 {
-    public HashSet<Thought> thoughtsThisFrame = new HashSet<Thought>();
+    public InputPackage workingInputs;
     public int playerId;
 
     private Player player;
@@ -17,24 +17,39 @@ public class PlayerBrain : MonoBehaviour, IBrain
     {
         player = ReInput.players.GetPlayer(playerId);
 
-    }
-    // Update is called once per frame
-    void Update()
-    {
+        player.AddInputEventDelegate(OnJumpPressed, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed,"Jump");
+        player.AddInputEventDelegate(OnJumpReleased, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Jump");
 
-        float xInput = Input.GetAxisRaw("Horizontal");
-        float yInput = Input.GetAxisRaw("Vertical");
-        
+        player.AddInputEventDelegate(OnMoveHorizontal, UpdateLoopType.Update, InputActionEventType.AxisActiveOrJustInactive, "MovementHorizontal");
     }
 
-
-    public HashSet<Thought> Think()
+    void OnJumpPressed(InputActionEventData data)
     {
-        return thoughtsThisFrame;
+        workingInputs.jumpPressed = true;
+        workingInputs.jumpHeld = true;
     }
 
-    public void ClearThoughts()
+    void OnJumpReleased(InputActionEventData data)
     {
-        thoughtsThisFrame.Clear();
+        workingInputs.jumpReleased = true;
+        workingInputs.jumpHeld = false;
+    }
+
+    void OnMoveHorizontal(InputActionEventData data)
+    {
+        workingInputs.hAxis = data.GetAxis();
+    }
+
+    public void Think(out InputPackage inputs)
+    {
+        inputs = workingInputs;
+        workingInputs.ResetPressReleased();
+    }
+
+    void OnDestroy()
+    {
+        player.RemoveInputEventDelegate(OnJumpPressed);
+        player.RemoveInputEventDelegate(OnJumpReleased);
+        player.RemoveInputEventDelegate(OnMoveHorizontal);
     }
 }

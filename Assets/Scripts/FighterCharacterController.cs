@@ -12,15 +12,11 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
     public float jump;
     public float speed;
 
-    
-    private float hAxis;
-    private bool jumpPressed;
     private KinematicCharacterMotor Motor;
     private Vector3 velocity;
     private IBrain brain;
 
-    private HashSet<Thought> thoughtsThisFrame;
-
+    private InputPackage inputs;
     void Awake()
     {
         brain = GetComponent<IBrain>();
@@ -42,12 +38,12 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
 
     public void BeforeCharacterUpdate(float deltaTime)
     {
-        thoughtsThisFrame = brain.Think();
+        brain.Think(out inputs);
     }
 
     public void AfterCharacterUpdate(float deltaTime)
     {
-        brain.ClearThoughts();
+
     }
 
     public bool IsColliderValidForCollisions(Collider coll)
@@ -82,7 +78,7 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
 
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
     {
-        velocity.x = hAxis * speed;
+        velocity.x = inputs.hAxis * speed;
         if (Motor.GroundingStatus.IsStableOnGround)
         {
             velocity.y = -0.1f;
@@ -91,10 +87,9 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
             velocity.y += gravity * -1 * deltaTime;
         }
 
-        if (jumpPressed)
+        if (inputs.jumpPressed)
         {
             velocity.y = jump;
-            jumpPressed = false;
             Motor.ForceUnground();
         }
         currentVelocity = velocity;
