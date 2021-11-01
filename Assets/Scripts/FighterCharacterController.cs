@@ -12,15 +12,26 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
     public float jump;
     public float speed;
 
-    private KinematicCharacterMotor Motor;
-    private Vector3 velocity;
+    public KinematicCharacterMotor Motor;
+    public Animator animator;
+    public Vector3 velocity;
     private IBrain brain;
 
-    private InputPackage inputs;
+    public InputPackage inputs;
+
+    public AbstractFighterState CurrentState;
+
+    private Dictionary<string, AbstractFighterState> states = new Dictionary<string, AbstractFighterState>();
     void Awake()
     {
         brain = GetComponent<IBrain>();
+        animator = GetComponentInChildren<Animator>();
+
+        states["Error"] = new ErrorFighterState(this);
+        states["Idle"] = new IdleFighterState(this);
+        states["Jump"] = new JumpFighterState(this);
     }
+
     void Start()
     {
         if (!TryGetComponent(out Motor))
@@ -29,21 +40,29 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
         }
         
         Motor.CharacterController = this;
+
+        CurrentState = states["Idle"];
+        CurrentState.OnStateEnter();
     }
 
-    void Update()
+    public void ChangeState(string newStateName)
     {
-        
+        CurrentState.OnStateExit();
+        CurrentState = states.GetValueOrDefault(newStateName, states["Error"]);
+        CurrentState.OnStateEnter();
     }
 
     public void BeforeCharacterUpdate(float deltaTime)
     {
         brain.Think(out inputs);
+        CurrentState.BeforeCharacterUpdate(deltaTime);
+
+        CurrentState.OnStateUpdate();
     }
 
     public void AfterCharacterUpdate(float deltaTime)
     {
-
+        CurrentState.AfterCharacterUpdate(deltaTime);
     }
 
     public bool IsColliderValidForCollisions(Collider coll)
@@ -78,6 +97,8 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
 
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
     {
+        CurrentState.UpdateVelocity(ref currentVelocity, deltaTime);
+
         velocity.x = inputs.hAxis * speed;
         if (Motor.GroundingStatus.IsStableOnGround)
         {
@@ -87,11 +108,6 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
             velocity.y += gravity * -1 * deltaTime;
         }
 
-        if (inputs.jumpPressed)
-        {
-            velocity.y = jump;
-            Motor.ForceUnground();
-        }
         currentVelocity = velocity;
     }
 
@@ -110,11 +126,11 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
 
     protected void OnLanded()
     {
-        Debug.Log("Landed");
+        CurrentState.OnLanded();
     }
 
     protected void OnLeaveStableGround()
     {
-        Debug.Log("Left ground");
+        CurrentState.OnLeaveStableGround();
     }
 }
