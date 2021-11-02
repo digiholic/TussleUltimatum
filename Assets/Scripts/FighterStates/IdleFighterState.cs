@@ -31,4 +31,6 @@ public class IdleFighterState : AbstractFighterState
     public override void OnLeaveStableGround() { }
 
     public override void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime) { }
+
+    public override void ReceiveAnimatorMessage(string message) { }
 }

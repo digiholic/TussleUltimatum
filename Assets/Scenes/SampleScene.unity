@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1931,6 +1931,15 @@ MonoBehaviour:
   gravity: 10
   jump: 10
   speed: 5
+  Motor: {fileID: 0}
+  animator: {fileID: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  inputs:
+    hAxis: 0
+    vAxis: 0
+    jumpPressed: 0
+    jumpHeld: 0
+    jumpReleased: 0
 --- !u!114 &1536389689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1955,3 +1964,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 82a2914d8f86c62488456950c8330e38, type: 3}
   m_PrefabInstance: {fileID: 599966505}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2026143214 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 82a2914d8f86c62488456950c8330e38, type: 3}
+  m_PrefabInstance: {fileID: 599966505}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2026143216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026143214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8915177f1068544bb0dfe951465e292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fighter: {fileID: 1536389688}

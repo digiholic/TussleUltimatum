@@ -52,6 +52,10 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
         CurrentState.OnStateEnter();
     }
 
+    public void ReceiveAnimatorMessage(string message)
+    {
+        CurrentState.ReceiveAnimatorMessage(message);
+    }
     public void BeforeCharacterUpdate(float deltaTime)
     {
         brain.Think(out inputs);
@@ -108,6 +112,8 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
             velocity.y += gravity * -1 * deltaTime;
         }
 
+        animator.SetFloat("hSpeed", velocity.x);
+        animator.SetFloat("vSpeed", velocity.y);
         currentVelocity = velocity;
     }
 
@@ -126,11 +132,13 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
 
     protected void OnLanded()
     {
+        animator.SetBool("grounded", true);
         CurrentState.OnLanded();
     }
 
     protected void OnLeaveStableGround()
     {
+        animator.SetBool("grounded", false);
         CurrentState.OnLeaveStableGround();
     }
 }

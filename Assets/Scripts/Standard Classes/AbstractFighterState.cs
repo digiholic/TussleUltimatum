@@ -15,4 +15,6 @@ public abstract class AbstractFighterState
 
     public abstract void OnLanded();
     public abstract void OnLeaveStableGround();
+
+    public abstract void ReceiveAnimatorMessage(string message);
 }
