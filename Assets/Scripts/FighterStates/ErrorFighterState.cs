@@ -6,6 +6,8 @@ public class ErrorFighterState : AbstractFighterState
 {
     private FighterCharacterController fighter;
 
+    public override int CurrentFrame { get; set; }
+
     public ErrorFighterState(FighterCharacterController fighter)
     {
         this.fighter = fighter;

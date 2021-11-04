@@ -12,20 +12,23 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
     public float jump;
     public float speed;
 
-    public KinematicCharacterMotor Motor;
-    public Animator animator;
-    public Vector3 velocity;
-    private IBrain brain;
-
     public InputPackage inputs;
 
-    public AbstractFighterState CurrentState;
+    private KinematicCharacterMotor Motor;
+    private AbstractFighterState CurrentState;
+    private FighterAnimationStateNames animations;
+    private Animator animator;
+    
+    private IBrain brain;
+
+    public Vector3 velocity;
 
     private Dictionary<string, AbstractFighterState> states = new Dictionary<string, AbstractFighterState>();
     void Awake()
     {
         brain = GetComponent<IBrain>();
         animator = GetComponentInChildren<Animator>();
+        animations = GetComponent<FighterAnimationStateNames>();
 
         states["Error"] = new ErrorFighterState(this);
         states["Idle"] = new IdleFighterState(this);
@@ -52,10 +55,11 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
         CurrentState.OnStateEnter();
     }
 
-    public void ReceiveAnimatorMessage(string message)
-    {
-        CurrentState.ReceiveAnimatorMessage(message);
-    }
+    public void PlayAnimation(AnimationName animation) => animator.Play(animations.Get(animation));
+    public void ForceUnground() => Motor.ForceUnground();
+    public void ReceiveAnimatorMessage(string message)=> CurrentState.ReceiveAnimatorMessage(message);
+    
+
     public void BeforeCharacterUpdate(float deltaTime)
     {
         brain.Think(out inputs);
@@ -74,30 +78,11 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
         return true;
     }
 
-    public void OnDiscreteCollisionDetected(Collider hitCollider)
-    {
-        
-    }
-
-    public void OnGroundHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport)
-    {
-        
-    }
-
-    public void OnMovementHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport)
-    {
-        
-    }
-
-    public void ProcessHitStabilityReport(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, Vector3 atCharacterPosition, Quaternion atCharacterRotation, ref HitStabilityReport hitStabilityReport)
-    {
-        
-    }
-
-    public void UpdateRotation(ref Quaternion currentRotation, float deltaTime)
-    {
-    
-    }
+    public void OnDiscreteCollisionDetected(Collider hitCollider) { }
+    public void OnGroundHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
+    public void OnMovementHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
+    public void ProcessHitStabilityReport(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, Vector3 atCharacterPosition, Quaternion atCharacterRotation, ref HitStabilityReport hitStabilityReport) { }
+    public void UpdateRotation(ref Quaternion currentRotation, float deltaTime) { }
 
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
     {

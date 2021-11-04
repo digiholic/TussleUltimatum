@@ -6,14 +6,16 @@ public class IdleFighterState : AbstractFighterState
 {
     private FighterCharacterController fighter;
 
+    public override int CurrentFrame { get; set; }
+
     public IdleFighterState(FighterCharacterController fighter)
     {
         this.fighter = fighter;
     }
 
     public override void OnStateEnter() {
-        Debug.Log("Idle StateEnterred");
-        fighter.animator.Play("Idle");
+        fighter.PlayAnimation(AnimationName.IDLE);
+        CurrentFrame = 0;
     }
 
     public override void OnStateExit() { }
@@ -25,6 +27,8 @@ public class IdleFighterState : AbstractFighterState
         {
             fighter.ChangeState("Jump");
         }
+
+        CurrentFrame++;
     }
 
     public override void OnLanded() { }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class AbstractFighterState
 {
+    public abstract int CurrentFrame { get; set; }
+
     public abstract void OnStateEnter();
     public abstract void OnStateExit();
     public abstract void OnStateUpdate();
