@@ -88,7 +88,6 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
     {
         CurrentState.UpdateVelocity(ref currentVelocity, deltaTime);
 
-        velocity.x = inputs.hAxis * speed;
         if (Motor.GroundingStatus.IsStableOnGround)
         {
             velocity.y = -0.1f;
