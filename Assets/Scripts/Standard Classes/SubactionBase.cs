@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Subaction
+namespace Subactions
 {
-    public abstract class SubactionBase : ScriptableObject
+    [System.Serializable]
+    public abstract class SubactionBase
     {
         public abstract void Execute(FighterCharacterController fighter, AbstractFighterState state);
     }

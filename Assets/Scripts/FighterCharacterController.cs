@@ -22,6 +22,7 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
     private IBrain brain;
 
     public Vector3 velocity;
+    public Vector3 targetVelocity;
 
     private Dictionary<string, AbstractFighterState> states = new Dictionary<string, AbstractFighterState>();
     void Awake()
