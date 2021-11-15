@@ -13,7 +13,7 @@ public class ChangeXSpeed : SubactionBase
     public float newXValue;
     public bool relative;
 
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         if (relative) fighter.velocity.x += newXValue;
         else fighter.velocity.x = newXValue;
@@ -25,7 +25,7 @@ public class ChangeXTargetSpeed : SubactionBase
     public float newXValue;
     public bool relative;
 
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         if (relative) fighter.targetVelocity.x += newXValue;
         else fighter.targetVelocity.x = newXValue;
@@ -37,7 +37,7 @@ public class ChangeYSpeed : SubactionBase
     public float newYValue;
     public bool relative;
 
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         if (relative) fighter.velocity.y += newYValue;
         else fighter.velocity.y = newYValue;
@@ -49,7 +49,7 @@ public class ChangeYTargetSpeed : SubactionBase
     public float newYValue;
     public bool relative;
 
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         if (relative) fighter.targetVelocity.y += newYValue;
         else fighter.targetVelocity.y = newYValue;
@@ -58,7 +58,7 @@ public class ChangeYTargetSpeed : SubactionBase
 [System.Serializable]
 public class Accelerate : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -66,7 +66,7 @@ public class Accelerate : SubactionBase
 [System.Serializable]
 public class ShiftXPosition : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -74,7 +74,7 @@ public class ShiftXPosition : SubactionBase
 [System.Serializable]
 public class ShiftYPosition : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -82,7 +82,7 @@ public class ShiftYPosition : SubactionBase
 [System.Serializable]
 public class CreateHitbox : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -90,7 +90,7 @@ public class CreateHitbox : SubactionBase
 [System.Serializable]
 public class ActivateHitbox : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -98,7 +98,7 @@ public class ActivateHitbox : SubactionBase
 [System.Serializable]
 public class DeactivateHitbox : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -106,7 +106,7 @@ public class DeactivateHitbox : SubactionBase
 [System.Serializable]
 public class ModifyHitbox : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -114,23 +114,25 @@ public class ModifyHitbox : SubactionBase
 [System.Serializable]
 public class ChargeHitbox : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
 }
 [System.Serializable]
-public class DoAction : SubactionBase
+public class ChangeState : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public string StateName;
+
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
-        throw new System.NotImplementedException();
+        fighter.ChangeState(StateName);
     }
 }
 [System.Serializable]
 public class DoTransition : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -138,7 +140,7 @@ public class DoTransition : SubactionBase
 [System.Serializable]
 public class IfButtonBuffered : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -146,7 +148,7 @@ public class IfButtonBuffered : SubactionBase
 [System.Serializable]
 public class IfButtonHeld : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -154,7 +156,7 @@ public class IfButtonHeld : SubactionBase
 [System.Serializable]
 public class IfVar : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -162,7 +164,7 @@ public class IfVar : SubactionBase
 [System.Serializable]
 public class Else : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -170,7 +172,7 @@ public class Else : SubactionBase
 [System.Serializable]
 public class EndIf : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -178,7 +180,7 @@ public class EndIf : SubactionBase
 [System.Serializable]
 public class InitVar : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -186,7 +188,7 @@ public class InitVar : SubactionBase
 [System.Serializable]
 public class SetVar : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -194,7 +196,7 @@ public class SetVar : SubactionBase
 [System.Serializable]
 public class PassVar : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -202,7 +204,7 @@ public class PassVar : SubactionBase
 [System.Serializable]
 public class PlaySound : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -210,15 +212,16 @@ public class PlaySound : SubactionBase
 [System.Serializable]
 public class PrintDebug : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public string message;
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
-        throw new System.NotImplementedException();
+        Debug.Log(message);
     }
 }
 [System.Serializable]
 public class Rotate : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -226,7 +229,7 @@ public class Rotate : SubactionBase
 [System.Serializable]
 public class Unrotate : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -234,7 +237,7 @@ public class Unrotate : SubactionBase
 [System.Serializable]
 public class SetAnchor : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -242,7 +245,7 @@ public class SetAnchor : SubactionBase
 [System.Serializable]
 public class ChangeFrame : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }
@@ -250,15 +253,17 @@ public class ChangeFrame : SubactionBase
 [System.Serializable]
 public class ChangeAnimation : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public string animationName;
+
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
-        throw new System.NotImplementedException();
+        fighter.PlayAnimation(animationName);
     }
 }
 [System.Serializable]
 public class ChangeAnimationTime : SubactionBase
 {
-    public override void Execute(FighterCharacterController fighter, AbstractFighterState state)
+    public override void Execute(FighterCharacterController fighter, FighterState state)
     {
         throw new System.NotImplementedException();
     }

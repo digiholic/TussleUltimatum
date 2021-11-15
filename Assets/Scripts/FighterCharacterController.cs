@@ -15,8 +15,7 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
     public InputPackage inputs;
 
     private KinematicCharacterMotor Motor;
-    private AbstractFighterState CurrentState;
-    private FighterAnimationStateNames animations;
+    private FighterState CurrentState;
     private Animator animator;
     
     private IBrain brain;
@@ -24,16 +23,12 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
     public Vector3 velocity;
     public Vector3 targetVelocity;
 
-    private Dictionary<string, AbstractFighterState> states = new Dictionary<string, AbstractFighterState>();
+    private Dictionary<string, FighterState> states = new Dictionary<string, FighterState>();
+
     void Awake()
     {
         brain = GetComponent<IBrain>();
         animator = GetComponentInChildren<Animator>();
-        animations = GetComponent<FighterAnimationStateNames>();
-
-        states["Error"] = new ErrorFighterState(this);
-        states["Idle"] = new IdleFighterState(this);
-        states["Jump"] = new JumpFighterState(this);
     }
 
     void Start()
@@ -56,7 +51,7 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
         CurrentState.OnStateEnter();
     }
 
-    public void PlayAnimation(AnimationName animation) => animator.Play(animations.Get(animation));
+    public void PlayAnimation(string animationName) => animator.Play(animationName);
     public void ForceUnground() => Motor.ForceUnground();
     public void ReceiveAnimatorMessage(string message)=> CurrentState.ReceiveAnimatorMessage(message);
     

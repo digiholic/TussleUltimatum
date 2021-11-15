@@ -7,6 +7,6 @@ namespace Subactions
     [System.Serializable]
     public abstract class SubactionBase
     {
-        public abstract void Execute(FighterCharacterController fighter, AbstractFighterState state);
+        public abstract void Execute(FighterCharacterController fighter, FighterState state);
     }
 }
