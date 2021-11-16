@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEditor;
 using Subactions;
 
-[CustomEditor(typeof(TestFighter))]
+[CustomEditor(typeof(FighterInfo))]
 public class TestFighterEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        TestFighter fighter = (TestFighter)target;
+        FighterInfo fighter = (FighterInfo)target;
 
         if (GUILayout.Button("Add ChangeX"))
         {
