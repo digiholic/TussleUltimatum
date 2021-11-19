@@ -11,12 +11,12 @@ public class FighterState
     public int CurrentFrame { get; set; }
 
     [SerializeReference] public List<SubactionBase> OnStateEnterSubactions = new List<SubactionBase>();
-    public List<SubactionBase> BeforeUpdateSubactions;
-    public List<SubactionBase> OnStateUpdateSubactions;
-    public List<SubactionBase> AfterCharacterUpdateSubactions;
-    public List<SubactionBase> OnStateExitSubactions;
-    public List<SubactionBase> OnLandedSubactions;
-    public List<SubactionBase> OnLeaveStableGroundSubactions;
+    [SerializeReference] public List<SubactionBase> BeforeUpdateSubactions;
+    [SerializeReference] public List<SubactionBase> OnStateUpdateSubactions;
+    [SerializeReference] public List<SubactionBase> AfterCharacterUpdateSubactions;
+    [SerializeReference] public List<SubactionBase> OnStateExitSubactions;
+    [SerializeReference] public List<SubactionBase> OnLandedSubactions;
+    [SerializeReference] public List<SubactionBase> OnLeaveStableGroundSubactions;
     
     public void OnStateEnter() { }
     public void BeforeCharacterUpdate(float deltaTime) { }
