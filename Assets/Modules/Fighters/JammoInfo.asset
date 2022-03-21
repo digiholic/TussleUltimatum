@@ -13,7 +13,23 @@ MonoBehaviour:
   m_Name: JammoInfo
   m_EditorClassIdentifier: 
   DisplayName: Test Fighter
-  states: []
+  states:
+  - name: Idle
+    OnStateEnterSubactions: []
+    BeforeUpdateSubactions: []
+    OnStateUpdateSubactions: []
+    AfterCharacterUpdateSubactions: []
+    OnStateExitSubactions: []
+    OnLandedSubactions: []
+    OnLeaveStableGroundSubactions: []
+  - name: Move
+    OnStateEnterSubactions: []
+    BeforeUpdateSubactions: []
+    OnStateUpdateSubactions: []
+    AfterCharacterUpdateSubactions: []
+    OnStateExitSubactions: []
+    OnLandedSubactions: []
+    OnLeaveStableGroundSubactions: []
   references:
     version: 2
     RefIds: []

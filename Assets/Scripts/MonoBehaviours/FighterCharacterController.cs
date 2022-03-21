@@ -2,7 +2,6 @@ using KinematicCharacterController;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Rewired;
 
 public class FighterCharacterController : MonoBehaviour, ICharacterController
 {
@@ -23,12 +22,17 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
     public Vector3 velocity;
     public Vector3 targetVelocity;
 
+    public FighterInfo info;
     private Dictionary<string, FighterState> states = new Dictionary<string, FighterState>();
 
     void Awake()
     {
         brain = GetComponent<IBrain>();
         animator = GetComponentInChildren<Animator>();
+        foreach(FighterState state in info.states)
+        {
+            states[state.name] = state;
+        }
     }
 
     void Start()

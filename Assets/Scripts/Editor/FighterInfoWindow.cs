@@ -34,6 +34,7 @@ public class FighterInfoWindow : ExtendedEditorWindow
         }
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndHorizontal();
+        Event e;
 
         serializedObject.ApplyModifiedProperties();
     }
