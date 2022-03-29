@@ -9,7 +9,6 @@ public class InputInteractions : Editor
 {
     static InputInteractions()
     {
-        Debug.Log("Registering custom inputs");
         InputSystem.RegisterInteraction<SmashInteraction>();
     }
 }

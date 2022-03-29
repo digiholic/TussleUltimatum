@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// The PlayerBrain is an implementation of IBrain that reads input for a player and generates Thoughts from them
@@ -16,9 +17,9 @@ public class PlayerBrain : MonoBehaviour, IBrain
     {
         TussleInput input = new TussleInput();
         input.Fighter.Smash.performed += (context) => Debug.Log($"SMAAAAAAASH! {context.ReadValue<Vector2>()}");
-        input.Fighter.Move.performed += (context) => Debug.Log($"Joystick Input Received {context.ReadValue<Vector2>()}");
+        input.Fighter.Move.performed += OnMoveHorizontal;
+        input.Fighter.Move.canceled += OnMoveHorizontal;
         input.Enable();
-        //player = ReInput.players.GetPlayer(playerId);
 
         //player.AddInputEventDelegate(OnJumpPressed, UpdateLoopType.Update, InputActionEventType.ButtonJustPressed,"Jump");
         //player.AddInputEventDelegate(OnJumpReleased, UpdateLoopType.Update, InputActionEventType.ButtonJustReleased, "Jump");
@@ -37,12 +38,12 @@ public class PlayerBrain : MonoBehaviour, IBrain
         workingInputs.jumpReleased = true;
         workingInputs.jumpHeld = false;
     }
-
-    void OnMoveHorizontal(InputActionEventData data)
-    {
-        workingInputs.hAxis = data.GetAxis();
-    }
     */
+    void OnMoveHorizontal(InputAction.CallbackContext context)
+    {
+        workingInputs.hAxis = context.ReadValue<Vector2>().x;
+    }
+    
     public void Think(out InputPackage inputs)
     {
         inputs = workingInputs;
