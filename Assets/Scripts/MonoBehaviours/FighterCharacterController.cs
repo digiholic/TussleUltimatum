@@ -45,14 +45,14 @@ public class FighterCharacterController : MonoBehaviour, ICharacterController
         Motor.CharacterController = this;
 
         CurrentState = states["Idle"];
-        CurrentState.OnStateEnter();
+        CurrentState.OnStateEnter(this);
     }
 
     public void ChangeState(string newStateName)
     {
         CurrentState.OnStateExit();
         CurrentState = states.GetValueOrDefault(newStateName, states["Error"]);
-        CurrentState.OnStateEnter();
+        CurrentState.OnStateEnter(this);
     }
 
     public void PlayAnimation(string animationName) => animator.Play(animationName);
