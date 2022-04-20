@@ -18,31 +18,31 @@ public class FighterState
     [SerializeReference] public List<SubactionBase> OnLandedSubactions = new List<SubactionBase>();
     [SerializeReference] public List<SubactionBase> OnLeaveStableGroundSubactions = new List<SubactionBase>();
 
-    private FighterCharacterController fighter;
+    protected FighterCharacterController fighter;
 
-    public void OnStateEnter(FighterCharacterController fighter) {
+    public virtual void OnStateEnter(FighterCharacterController fighter) {
         this.fighter = fighter;
         OnStateEnterSubactions.ForEach(subaction => subaction.Execute(fighter, this));
     }
-    public void BeforeCharacterUpdate(float deltaTime) {
+    public virtual void BeforeCharacterUpdate(float deltaTime) {
         BeforeUpdateSubactions.ForEach(subaction => subaction.Execute(fighter, this));
     }
-    public void OnStateUpdate() {
+    public virtual void OnStateUpdate() {
         OnStateUpdateSubactions.ForEach(subaction => subaction.Execute(fighter, this));
     }
-    public void AfterCharacterUpdate(float deltaTime) {
+    public virtual void AfterCharacterUpdate(float deltaTime) {
         AfterCharacterUpdateSubactions.ForEach(subaction => subaction.Execute(fighter, this));
     }
-    public void OnStateExit() {
+    public virtual void OnStateExit() {
         OnStateExitSubactions.ForEach(subaction => subaction.Execute(fighter, this));
     }
-    public void OnLanded() {
+    public virtual void OnLanded() {
         OnLandedSubactions.ForEach(subaction => subaction.Execute(fighter, this));
     }
-    public void OnLeaveStableGround() {
+    public virtual void OnLeaveStableGround() {
         OnLeaveStableGroundSubactions.ForEach(subaction => subaction.Execute(fighter, this));
     }
 
-    public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime) { }
-    public void ReceiveAnimatorMessage(string message){ }
+    public virtual void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime) { }
+    public virtual void ReceiveAnimatorMessage(string message){ }
 }

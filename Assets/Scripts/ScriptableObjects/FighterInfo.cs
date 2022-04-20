@@ -6,7 +6,11 @@ using UnityEngine;
 public class FighterInfo : ScriptableObject
 {
     public string DisplayName = "Test Fighter";
-    
 
-    public List<FighterState> states;
+
+    //public List<FighterState> states;
+    [System.NonSerialized] public List<FighterState> states = new List<FighterState>()
+    {
+        new DebugIdleState()
+    };
 }
